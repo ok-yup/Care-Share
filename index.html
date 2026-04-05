@@ -141,6 +141,15 @@
             position: relative;
         }
 
+        /* --- Official Badges --- */
+        .admin-badge { 
+            display: inline-flex; align-items: center; gap: 4px; background: var(--accent-soft); color: var(--accent); 
+            padding: 4px 10px; border-radius: 6px; font-size: 0.65rem; font-weight: 800; border: 1px solid var(--accent); 
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; box-shadow: 0 0 10px rgba(74, 110, 83, 0.2);
+            width: fit-content;
+        }
+        .admin-badge::before { content: "🛡️"; font-size: 0.7rem; }
+
         .header-actions {
             display: flex;
             gap: 10px;
@@ -928,7 +937,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKuHn2--Tjoa9_Xvg6dnJzKriPUo4ZoWe0SvhCdIzMfDJpkiE4t3Nun21MnEwVg2DJ/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk6D4XZWNa2RpKikrOuAFT8zXNQRUfdkx4kf3N987JOoQUG0kQIdflVWr_Q0t3dmu9/exec";
         const BANNED_KEYWORDS = [
             'ขอเงิน', 'โอนเงิน', 'บริจาค', 'รับบริจาค', 'ขอบริจาค', 'ทำบุญ', 'ร่วมบุญ', 'เลขบัญชี',
             'PromptPay', 'พร้อมเพย์', 'วอเลท', 'Wallet', 'ขอกู้', 'ขอยืม', 'ช่วยเหลือเงิน', 'เดือดร้อนเรื่องเงิน',
@@ -1047,6 +1056,7 @@
                 el.className = 'card fade-in';
                 el.onclick = () => { window.location.hash = p.ID; showDetail(p.ID); };
                 el.innerHTML = `
+                    ${p.Author === 'Care Share' ? '<div class="admin-badge">Care Share 🌿</div>' : ''}
                     <div class="card-category">${p.Category}</div>
                     <div class="card-content">${p.Content}</div>
                     <div class="card-footer">
@@ -1075,6 +1085,7 @@
             const text = `ลองอ่านเรื่องนี้ดูครับ: "${p.Content.substring(0, 50)}..."`;
 
             document.getElementById('detailContent').innerHTML = `
+                ${p.Author === 'Care Share' ? '<div class="admin-badge" style="font-size:0.8rem; padding:6px 15px; margin-bottom:20px;">Care Share 🌿</div>' : ''}
                 <div class="card-category">${p.Category}</div>
                 <div class="detail-title">${p.Content}</div>
                 <div class="share-cluster" style="margin-top:40px; justify-content:center; border-top:1px solid var(--border); padding-top:30px;">
@@ -1111,7 +1122,12 @@
                     const res = await fetch(SCRIPT_URL, {
                         method: 'POST',
                         mode: 'cors',
-                        body: JSON.stringify({ action: 'addPost', content: val, category: selectedCat })
+                        body: JSON.stringify({ 
+                            action: 'addPost', 
+                            content: val, 
+                            category: selectedCat,
+                            author: 'Care Share' // Currently set to post as admin for initial test
+                        })
                     });
                     const result = await res.json();
 
