@@ -256,7 +256,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxNfFfxUJGUvqgKzFwGxE1nByHjS7vzAqgSmdB5ee8yHks4BDgeUmz0Kh7KSZFk5lRJ/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyun4CCKBghzeecsJrRmoWZO49fc_6-tNdPirOrOaS4O18CIC3FwNoNWFYi1P95tAmq/exec";
         let allPosts = [];
         let latestPostId = null;
         let currentPostId = null;
@@ -406,23 +406,25 @@
             
             try {
                 if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
-                    const res = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({action:'addPost', content:val, category:selectedCat}) });
-                    const json = await res.json();
-                    if(json.status === 'success') {
-                        document.getElementById('postInput').value = '';
-                        toast("วางเมล็ดพันธุ์เรียบร้อย 🪴"); 
-                        fetchPosts();
-                    } else { 
-                        toast(json.message || "มีบางอย่างผิดพลาด"); 
-                    }
+                    // Using text/plain to avoid CORS preflight OPTIONS request
+                    const res = await fetch(SCRIPT_URL, { 
+                        method:'POST', 
+                        mode: 'no-cors', // Safety fallback, but better to set 'Everyone' access
+                        body: JSON.stringify({action:'addPost', content:val, category:selectedCat}) 
+                    });
+                    
+                    // Since mode: 'no-cors' cannot read response, we assume success or fetch again
+                    document.getElementById('postInput').value = '';
+                    toast("กำลังประมวลผล... โปรดรอสักครู่ 🪴"); 
+                    setTimeout(fetchPosts, 3000); 
                 } else { 
-                    toast("จำลองการโพสต์สำเร็จ (เนื่องจากยังไม่ได้ใส่ URL จริง)"); 
+                    toast("จำลองการโพสต์สำเร็จ"); 
                     document.getElementById('postInput').value = ''; 
                     fetchPosts(); 
                 }
             } catch (err) {
                 console.error(err);
-                toast("การเชื่อมต่อขัดข้อง หรือยังไม่ได้ Deploy Apps Script ครับ");
+                toast("การเชื่อมต่อขัดข้อง โปรดเช็คการตั้งค่า 'Anyone' ใน Apps Script ครับ");
             } finally {
                 btn.disabled = false;
                 btn.style.opacity = '1';
@@ -439,16 +441,15 @@
 
             try {
                 if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
-                    const res = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({action:'incrementSpark', id:currentPostId, replyText:r, missionText:k}) });
-                    const json = await res.json();
-                    if(json.status === 'success') {
-                        closeModals();
-                        toast("ความดีของคุณงอกงามแล้ว 🌿"); 
-                        fetchPosts();
-                        setTimeout(() => showDetail(currentPostId), 500);
-                    } else { 
-                        toast(json.message || "ส่งข้อมูลไม่สำเร็จ"); 
-                    }
+                    await fetch(SCRIPT_URL, { 
+                        method:'POST', 
+                        mode: 'no-cors',
+                        body: JSON.stringify({action:'incrementSpark', id:currentPostId, replyText:r, missionText:k}) 
+                    });
+                    closeModals();
+                    toast("ความดีของคุณงอกงามแล้ว 🌿"); 
+                    setTimeout(fetchPosts, 3000);
+                    setTimeout(() => showDetail(currentPostId), 3500);
                 } else { 
                     toast("จำลองการรับไม้ต่อสำเร็จ"); 
                     closeModals(); 
@@ -456,7 +457,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                toast("ไม่สามารถเชื่อมต่อได้ กรุณาตรวจสอบการ Deploy เว็บแอปครับ");
+                toast("ไม่สามารถเชื่อมต่อได้");
             } finally {
                 btn.disabled = false;
                 btn.style.opacity = '1';
