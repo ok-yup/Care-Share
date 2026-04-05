@@ -246,7 +246,7 @@
                 <div id="missionsList"></div>
             </div>
             <div style="height:100px"></div>
-            <button id="fabChain" class="btn-chain-fab">รับไม้ต่อเรื่องนี้ 🤝</button>
+            <button id="fabChain" class="btn-chain-fab" onclick="openAction()">รับไม้ต่อเรื่องนี้ 🤝</button>
         </div>
     </main>
 
@@ -393,7 +393,7 @@
                         <div class="meta-text">รับส่งต่อแล้ว ${p.SparkCount} ครั้ง</div>
                         <div class="card-actions">
                             <button class="text-link" style="font-weight:700; color:var(--text-sub)" onclick="event.stopPropagation(); shareIt('${p.ID}')">แชร์</button>
-                            <button class="text-link" style="color:var(--accent); font-weight:700">รับไม้ต่อ 🤝</button>
+                            <button class="text-link" style="color:var(--accent); font-weight:700" onclick="event.stopPropagation(); showDetail('${p.ID}'); setTimeout(openAction, 100)">รับไม้ต่อ 🤝</button>
                         </div>
                     </div>
                 `;
