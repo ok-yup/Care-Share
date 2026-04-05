@@ -188,6 +188,42 @@
             <div id="postsContainer"></div>
         </div>
 
+        <!-- NEW: Handbook Page View -->
+        <div id="aboutView" class="view">
+            <div style="text-align:left"><button class="btn-back" onclick="navigateToFeed()">← กลับไปที่สวน</button></div>
+            <div class="detail-post" style="padding:40px;">
+                <h2 style="font-size:1.8rem; margin-bottom:30px; color:var(--text-main); letter-spacing: -1px;">คู่มือการเดินทาง 🌱</h2>
+                
+                <div class="about-section" style="margin-bottom:35px;">
+                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">จุดประสงค์ของเรา (Our Purpose)</h4>
+                    <p style="font-size:1rem; opacity:0.9;">เราสร้างพื้นที่ปลอดภัยสำหรับการเปลี่ยน "ความรู้" ให้กลายเป็น "ความดี" ที่จับต้องได้จริง เพื่อสร้างแรงกระเพื่อมเชิงบวกในสังคม</p>
+                </div>
+
+                <div class="about-section" style="margin-bottom:35px;">
+                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">ความสามารถของระบบ (Capabilities)</h4>
+                    <ul style="list-style:none; padding:0;">
+                        <li style="margin-bottom:15px;"><strong>🌱 สวนแห่งปัญญา:</strong> แบ่งปันความรู้ที่คุณมีให้กับโลกใบนี้ได้อย่างอิสระ</li>
+                        <li style="margin-bottom:15px;"><strong>🤝 การรับไม้ต่อ:</strong> เมื่อพบสิ่งที่มีประโยชน์ คุณสามารถเลือก "ทำความดีตอบแทน" (Giveback) เพื่อบันทึกความดีของคุณ</li>
+                        <li style="margin-bottom:15px;"><strong>✨ พลังใจรวม:</strong> ทุกการส่งต่อจะช่วยเพิ่ม "Sparks" ของชุมชนให้เบ่งบาน</li>
+                        <li style="margin-bottom:15px;"><strong>🛡️ AI ผู้ดูแล:</strong> มีระบบ AI ที่คอยแนะนำเนื้อหาให้สุภาพและปลอดภัย</li>
+                        <li style="margin-bottom:15px;"><strong>📱 แอปมือถือ:</strong> ติดตั้งเป็นแอปบนหน้าจอหลัก (PWA) เพื่อความสะดวก</li>
+                    </ul>
+                </div>
+
+                <div class="about-section" style="margin-bottom:35px;">
+                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">กฎของหัวใจ (The Rules)</h4>
+                    <ul style="list-style:disc; padding-left:20px; opacity:0.9;">
+                        <li><strong>แบ่งปัน:</strong> เน้นความรู้ที่เป็นประโยชน์ต่อผู้อื่น</li>
+                        <li><strong>ส่งต่อ:</strong> เมื่อได้รับให้ตอบแทนด้วยความดีเล็กๆ</li>
+                        <li><strong>รักษาพื้นที่:</strong> งดเรื่องการเมือง การระดมทุน และคำพูดที่บั่นทอนกำลังใจ</li>
+                    </ul>
+                </div>
+
+                <button onclick="navigateToFeed()" class="btn-post" style="float:none; width:100%; margin-top:20px;">เริ่มการเดินทาง</button>
+            </div>
+            <div style="height:50px"></div>
+        </div>
+
         <div id="detailView" class="view">
             <div style="text-align:left"><button class="btn-back" onclick="navigateToFeed()">← กลับไปที่สวน</button></div>
             <div id="detailContent" class="detail-post"></div>
@@ -203,35 +239,6 @@
     <div id="toastContainer" class="toast-container"></div>
 
     <div id="modalOverlay" class="modal-overlay">
-        <!-- Handbook Modal -->
-        <div id="aboutModal" class="modal" style="display:none; overflow-y:auto;">
-            <h2 style="font-size:1.6rem; margin-bottom:25px; color:var(--text-main);">คู่มือการเดินทาง 🌱</h2>
-            <div class="about-section">
-                <h4>จุดประสงค์ของเรา (Our Purpose)</h4>
-                <p>สร้างพื้นที่ปลอดภัยสำหรับการเปลี่ยน "ความรู้" ให้กลายเป็น "ความดี" ที่จับต้องได้จริง</p>
-            </div>
-            <div class="about-section">
-                <h4>ความสามารถของระบบ (Capabilities)</h4>
-                <ul>
-                    <li><strong>สวนแห่งปัญญา:</strong> แบ่งปันความรู้ที่เป็นประโยชน์ได้ทันทีโดยนิรนาม</li>
-                    <li><strong>การรับไม้ต่อ:</strong> เมื่อได้รับความรู้ สามารถเลือก "ทำความดีตอบแทน" เพื่อบันทึกลงในพงศาวดารความดี</li>
-                    <li><strong>พลังใจรวม:</strong> ทุกการส่งต่อจะช่วยเพิ่ม "Sparks" หรือพลังใจให้ชุมชนเบ่งบาน</li>
-                    <li><strong>AI คัดกรอง:</strong> มีระบบ AI "ผู้ดูแล" ที่คอยดูแลเนื้อหาให้สุภาพและปลอดภัยอย่างนุ่มนวล</li>
-                    <li><strong>แอปมือถือ (PWA):</strong> ติดตั้งลงบนหน้าจอหลักได้เหมือนแอปจริงเพื่อการใช้งานที่ลื่นไหล</li>
-                </ul>
-            </div>
-            <div class="about-section">
-                <h4>กฎของหัวใจ (The Rules)</h4>
-                <ul>
-                    <li><strong>แชร์ปัญญา:</strong> แบ่งปันความรู้ที่เป็นประโยชน์</li>
-                    <li><strong>รดน้ำความดี:</strong> เมื่อได้รับความรู้ ให้ตอบแทนด้วยการทำความดีเล็กๆ น้อยๆ เพื่อผู้อื่น</li>
-                    <li><strong>รักษาพื้นที่:</strong> งดเรื่องการเมือง การระดมทุน และถ้อยคำที่บั่นทอนกำลังใจ</li>
-                    <li><strong>นิรนามแต่จริงใจ:</strong> โฟกัสที่สิ่งดีๆ ที่คุณส่งต่อ</li>
-                </ul>
-            </div>
-            <button onclick="closeModals()" class="btn-post" style="float:none; width:100%; margin-top:10px;">เข้าใจและร่วมเดินทาง</button>
-        </div>
-
         <!-- Action Modal -->
         <div id="actionModal" class="modal" style="display:none;">
             <h2>รับไม้ต่อ</h2>
@@ -300,9 +307,7 @@
         if(localStorage.getItem('v27-theme') === 'dark') applyTheme(true);
 
         function openAbout() {
-            document.getElementById('modalOverlay').style.display = 'flex';
-            document.getElementById('aboutModal').style.display = 'block';
-            document.getElementById('actionModal').style.display = 'none';
+            showView('about');
         }
         function openAction() {
             document.getElementById('modalOverlay').style.display = 'flex';
