@@ -400,33 +400,67 @@
         document.getElementById('postBtn').onclick = async () => {
             const val = document.getElementById('postInput').value.trim();
             if(!val) return;
-            const btn = document.getElementById('postBtn'); btn.disabled = true;
-            if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
-                const res = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({action:'addPost', content:val, category:selectedCat}) });
-                const json = await res.json();
-                if(json.status === 'success') {
-                    document.getElementById('postInput').value = '';
-                    toast("วางเมล็ดพันธุ์เรียบร้อย 🪴"); fetchPosts();
-                } else { toast(json.message); }
-            } else { toast("จำลองการโพสต์สำเร็จ"); document.getElementById('postInput').value = ''; fetchPosts(); }
-            btn.disabled = false;
+            const btn = document.getElementById('postBtn'); 
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+            
+            try {
+                if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
+                    const res = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({action:'addPost', content:val, category:selectedCat}) });
+                    const json = await res.json();
+                    if(json.status === 'success') {
+                        document.getElementById('postInput').value = '';
+                        toast("วางเมล็ดพันธุ์เรียบร้อย 🪴"); 
+                        fetchPosts();
+                    } else { 
+                        toast(json.message || "มีบางอย่างผิดพลาด"); 
+                    }
+                } else { 
+                    toast("จำลองการโพสต์สำเร็จ (เนื่องจากยังไม่ได้ใส่ URL จริง)"); 
+                    document.getElementById('postInput').value = ''; 
+                    fetchPosts(); 
+                }
+            } catch (err) {
+                console.error(err);
+                toast("การเชื่อมต่อขัดข้อง หรือยังไม่ได้ Deploy Apps Script ครับ");
+            } finally {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
         }
 
         document.getElementById('fabChain').onclick = openAction;
         document.getElementById('confirmBtn').onclick = async () => {
             const r = document.getElementById('replyText').value.trim(), k = document.getElementById('kindnessText').value.trim();
             if(!k) { toast("บอกเราหน่อยว่าจะทำความดีอะไร :)"); return; }
-            const btn = document.getElementById('confirmBtn'); btn.disabled = true;
-            if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
-                const res = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({action:'incrementSpark', id:currentPostId, replyText:r, missionText:k}) });
-                const json = await res.json();
-                if(json.status === 'success') {
-                    closeModals();
-                    toast("ความดีของคุณงอกงามแล้ว 🌿"); fetchPosts();
-                    setTimeout(() => showDetail(currentPostId), 500);
-                } else { toast(json.message); }
-            } else { toast("จำลองการรับไม้ต่อสำเร็จ"); closeModals(); fetchPosts(); }
-            btn.disabled = false;
+            const btn = document.getElementById('confirmBtn'); 
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+
+            try {
+                if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
+                    const res = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({action:'incrementSpark', id:currentPostId, replyText:r, missionText:k}) });
+                    const json = await res.json();
+                    if(json.status === 'success') {
+                        closeModals();
+                        toast("ความดีของคุณงอกงามแล้ว 🌿"); 
+                        fetchPosts();
+                        setTimeout(() => showDetail(currentPostId), 500);
+                    } else { 
+                        toast(json.message || "ส่งข้อมูลไม่สำเร็จ"); 
+                    }
+                } else { 
+                    toast("จำลองการรับไม้ต่อสำเร็จ"); 
+                    closeModals(); 
+                    fetchPosts(); 
+                }
+            } catch (err) {
+                console.error(err);
+                toast("ไม่สามารถเชื่อมต่อได้ กรุณาตรวจสอบการ Deploy เว็บแอปครับ");
+            } finally {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
         }
 
         function shareIt(id) {
