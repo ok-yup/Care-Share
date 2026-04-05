@@ -256,7 +256,13 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxWg24I_loR3vpWZPbqFLE_tDyr1BQ8briP0a3Llgo3DzOkgnSb22eB-PQ0mrddhGKY/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKuHn2--Tjoa9_Xvg6dnJzKriPUo4ZoWe0SvhCdIzMfDJpkiE4t3Nun21MnEwVg2DJ/exec";
+        const BANNED_KEYWORDS = [
+            'ขอเงิน', 'โอนเงิน', 'บริจาค', 'รับบริจาค', 'ขอบริจาค', 'ทำบุญ', 'ร่วมบุญ', 'เลขบัญชี', 
+            'PromptPay', 'พร้อมเพย์', 'วอเลท', 'Wallet', 'ขอกู้', 'ขอยืม', 'ช่วยเหลือเงิน', 'เดือดร้อนเรื่องเงิน',
+            'การเมือง', 'พรรค', 'เลือกตั้ง', 'รัฐบาล', 'นายก', 'ประท้วง', 'สถาบัน', 'ประชาธิปไตย', 'เผด็จการ'
+        ];
+
         let allPosts = [];
         let latestPostId = null;
         let currentPostId = null;
@@ -400,23 +406,29 @@
         document.getElementById('postBtn').onclick = async () => {
             const val = document.getElementById('postInput').value.trim();
             if(!val) return;
+
             const btn = document.getElementById('postBtn'); 
             btn.disabled = true;
             btn.style.opacity = '0.5';
-            
+            toast("กำลังปรึกษาผู้พิทักษ์สวน... โปรดรอสักครู่นะครับ 🌿");
+
             try {
                 if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
-                    // Using text/plain to avoid CORS preflight OPTIONS request
                     const res = await fetch(SCRIPT_URL, { 
-                        method:'POST', 
-                        mode: 'no-cors', // Safety fallback, but better to set 'Everyone' access
-                        body: JSON.stringify({action:'addPost', content:val, category:selectedCat}) 
+                        method: 'POST', 
+                        mode: 'cors', 
+                        body: JSON.stringify({ action: 'addPost', content: val, category: selectedCat }) 
                     });
+                    const result = await res.json();
                     
-                    // Since mode: 'no-cors' cannot read response, we assume success or fetch again
-                    document.getElementById('postInput').value = '';
-                    toast("กำลังประมวลผล... โปรดรอสักครู่ 🪴"); 
-                    setTimeout(fetchPosts, 3000); 
+                    if (result.status === 'success') {
+                        toast("เมล็ดพันธุ์ของคุณถูกวางลงในสวนแล้ว! ✨");
+                        document.getElementById('postInput').value = '';
+                        fetchPosts();
+                    } else {
+                        // This shows the UNIQUE, POLITE AI Sage message
+                        toast(result.message || "เมล็ดพันธุ์นี้อาจยังไม่เหมาะกับสวนในตอนนี้ ลองแชร์เรื่องราวอื่นดูไหมครับ?");
+                    }
                 } else { 
                     toast("จำลองการโพสต์สำเร็จ"); 
                     document.getElementById('postInput').value = ''; 
@@ -424,7 +436,7 @@
                 }
             } catch (err) {
                 console.error(err);
-                toast("การเชื่อมต่อขัดข้อง โปรดเช็คการตั้งค่า 'Anyone' ใน Apps Script ครับ");
+                toast("ระบบขัดข้องชั่วคราว ลองกลับมาแชร์ใหม่ภายหลังนะครับ 🌿");
             } finally {
                 btn.disabled = false;
                 btn.style.opacity = '1';
