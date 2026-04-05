@@ -124,8 +124,10 @@
         .sage-icon { font-size: 4rem; margin-bottom: 20px; display: block; filter: drop-shadow(0 5px 15px rgba(74, 110, 83, 0.2)); }
         .wisdom-text { font-size: 1.4rem; line-height: 1.8; color: var(--accent); margin-bottom: 40px; font-style: italic; font-weight: 300; }
 
-        /* --- Modals --- */
+        /* --- Modals & Overlays --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 10000; }
         .modal { background: var(--bg-card); width: 95%; max-width: 480px; padding: 40px; border-radius: 32px; border: 1px solid var(--border); box-shadow: var(--shadow); animation: pop 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); text-align: center; }
+        @keyframes pop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         
         @media (max-width: 600px) {
             header { padding: 40px 20px 20px; }
@@ -455,6 +457,17 @@
                 btn.disabled = false;
                 btn.style.opacity = '1';
             }
+        }
+
+        function openAction() {
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.getElementById('actionModal').style.display = 'block';
+        }
+        function closeModals() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+        function openAbout() {
+            showView('about');
         }
 
         document.getElementById('fabChain').onclick = openAction;
