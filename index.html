@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Care Share | สังคมดีเริ่มต้นที่เรา</title>
-    
+
     <!-- SEO & Social Sharing (OpenGraph) -->
-    <meta name="description" content="The Ripple of Wisdom - หนึ่งความรู้ส่งต่อ... ร้อยความดีงอกงาม พื้นที่ปลอดภัยสำหรับการแบ่งปัน">
+    <meta name="description"
+        content="The Ripple of Wisdom - หนึ่งความรู้ส่งต่อ... ร้อยความดีงอกงาม พื้นที่ปลอดภัยสำหรับการแบ่งปัน">
     <meta property="og:title" content="Care Share | สังคมแห่งการแบ่งปันที่เปี่ยมด้วยพลัง">
-    <meta property="og:description" content="ร่วมเป็นส่วนหนึ่งของการส่งต่อความรู้และสร้างแรงบันดาลใจให้เกิดความดีในสังคม">
+    <meta property="og:description"
+        content="ร่วมเป็นส่วนหนึ่งของการส่งต่อความรู้และสร้างแรงบันดาลใจให้เกิดความดีในสังคม">
     <meta property="og:image" content="icon.png">
     <meta property="og:type" content="website">
 
@@ -20,7 +23,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Prompt:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-body: #fdfbf7;
@@ -47,101 +52,708 @@
             --shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.5);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Outfit', 'Prompt', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; min-height: 100vh; transition: background-color 0.5s ease; overflow-x: hidden; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body {
+            font-family: 'Outfit', 'Prompt', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background-color 0.5s ease;
+            overflow-x: hidden;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* --- New Post Banner --- */
-        .new-post-banner { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 10px 25px; border-radius: 50px; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 0 15px 40px -10px rgba(74, 110, 83, 0.5); z-index: 5000; display: none; border: 2px solid white; animation: slideDown 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); }
-        @keyframes slideDown { from { top: -60px; } to { top: 20px; } }
+        .new-post-banner {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            box-shadow: 0 15px 40px -10px rgba(74, 110, 83, 0.5);
+            z-index: 5000;
+            display: none;
+            border: 2px solid white;
+            animation: slideDown 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        @keyframes slideDown {
+            from {
+                top: -60px;
+            }
+
+            to {
+                top: 20px;
+            }
+        }
 
         /* --- Energy Meter & Header --- */
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .energy-meter { font-size: 0.75rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 5px 15px; border-radius: 50px; border: 1px solid var(--accent); white-space: nowrap; }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-        header { padding: 40px 20px 40px; text-align: center; max-width: 600px; margin: 0 auto; position: relative; }
-        .header-actions { display: flex; gap: 10px; align-items: center; justify-content: center; margin-bottom: 15px; }
-        .theme-toggle, .btn-info { cursor: pointer; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-main); border: 1px solid var(--accent); padding: 6px 18px; border-radius: 50px; background: var(--bg-card); backdrop-filter: blur(8px); transition: var(--transition); display: flex; align-items: center; gap: 5px; box-shadow: var(--shadow); }
-        .btn-info { background: var(--accent); color: white; border-color: var(--accent); }
-        .theme-toggle:hover, .btn-info:hover { transform: scale(1.05); filter: brightness(1.1); }
-        
-        .guide-tip { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 0.6rem; color: var(--accent); font-weight: 800; animation: pulse 2s infinite; text-transform: uppercase; letter-spacing: 1px; }
-        @keyframes pulse { 0% { opacity: 0.4; transform: translate(-50%, 0); } 50% { opacity: 1; transform: translate(-50%, -5px); } 100% { opacity: 0.4; transform: translate(-50%, 0); } }
-        
-        .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
-        h1 { font-size: 2.3rem; font-weight: 600; margin-bottom: 5px; cursor: pointer; letter-spacing: -2px; background: linear-gradient(135deg, var(--text-main), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-        .tagline { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 30px; font-weight: 400; line-height: 1.4; }
+        .energy-meter {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-soft);
+            padding: 5px 15px;
+            border-radius: 50px;
+            border: 1px solid var(--accent);
+            white-space: nowrap;
+        }
+
+        header {
+            padding: 40px 20px 40px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .theme-toggle,
+        .btn-info {
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-main);
+            border: 1px solid var(--accent);
+            padding: 6px 18px;
+            border-radius: 50px;
+            background: var(--bg-card);
+            backdrop-filter: blur(8px);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-info {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .theme-toggle:hover,
+        .btn-info:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .guide-tip {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.6rem;
+            color: var(--accent);
+            font-weight: 800;
+            animation: pulse 2s infinite;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.4;
+                transform: translate(-50%, 0);
+            }
+
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -5px);
+            }
+
+            100% {
+                opacity: 0.4;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            cursor: pointer;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--text-main), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tagline {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+            line-height: 1.4;
+        }
 
         /* --- Concept Card --- */
-        .concept-card { background: var(--accent-soft); border: 1px solid var(--accent); padding: 25px; border-radius: 20px; margin-bottom: 30px; position: relative; text-align: left; }
-        .concept-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
-        .concept-card p { font-size: 0.85rem; color: var(--text-main); line-height: 1.6; }
-        .close-concept { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 1.2rem; font-weight: 400; opacity: 0.4; line-height: 1; }
-        .close-concept:hover { opacity: 1; color: var(--accent); }
+        .concept-card {
+            background: var(--accent-soft);
+            border: 1px solid var(--accent);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            text-align: left;
+        }
+
+        .concept-card h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .concept-card p {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        .close-concept {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 400;
+            opacity: 0.4;
+            line-height: 1;
+        }
+
+        .close-concept:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
 
         /* --- Scrollable Lists (Neat) --- */
-        .search-area { position: sticky; top: 0; background: var(--bg-glass); backdrop-filter: blur(12px); z-index: 100; margin: 0 -20px 30px; padding: 15px 20px; border-bottom: 1px solid var(--border); }
-        .search-input { width: 100%; padding: 10px 0; border: none; background: transparent; color: var(--text-main); font-family: inherit; font-size: 1.1rem; outline: none; }
-        
-        .cat-scroll-container { margin: 15px -30px 25px; padding: 5px 30px; overflow-x: auto; display: flex; gap: 8px; scrollbar-width: none; -ms-overflow-style: none; }
-        .cat-scroll-container::-webkit-scrollbar { display: none; }
-        
-        .filter-btn, .cat-sel { white-space: nowrap; font-size: 0.8rem; font-weight: 600; cursor: pointer; color: var(--text-sub); border: 1px solid var(--border); background: var(--bg-card); padding: 7px 18px; border-radius: 50px; transition: var(--transition); }
-        .filter-btn.active, .cat-sel.active { background: var(--accent); color: white; border-color: var(--accent); transform: scale(1.05); }
+        .search-area {
+            position: sticky;
+            top: 0;
+            background: var(--bg-glass);
+            backdrop-filter: blur(12px);
+            z-index: 100;
+            margin: 0 -20px 30px;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 0;
+            border: none;
+            background: transparent;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .cat-scroll-container {
+            margin: 15px -30px 25px;
+            padding: 5px 30px;
+            overflow-x: auto;
+            display: flex;
+            gap: 8px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .cat-scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn,
+        .cat-sel {
+            white-space: nowrap;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-sub);
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            padding: 7px 18px;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active,
+        .cat-sel.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
 
         /* --- Creator & Cards --- */
-        .post-box { background: var(--bg-card); border-radius: 24px; padding: 30px; margin-bottom: 40px; border: 1px solid var(--border); box-shadow: var(--shadow); transition: var(--transition); text-align: left; }
-        .post-box textarea { width: 100%; height: 110px; border: none; resize: none; font-size: 1.15rem; font-family: inherit; color: var(--text-main); outline: none; background: transparent; margin-bottom: 5px; }
-        
-        .btn-post { background: var(--accent); color: white; padding: 14px 40px; border: none; border-radius: 50px; font-family: inherit; font-weight: 600; cursor: pointer; transition: var(--transition); float: right; box-shadow: 0 10px 20px -5px rgba(74, 110, 83, 0.3); font-size: 1rem; }
-        .btn-post:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 15px 30px -10px rgba(74, 110, 83, 0.4); }
-
-        .card { padding: 30px; background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; transition: var(--transition); cursor: pointer; text-align: left; }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: var(--shadow); }
-        .card-category { font-size: 0.7rem; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px; }
-        .card-content { 
-            font-size: 1.15rem; color: var(--text-main); white-space: pre-wrap; margin-bottom: 20px; line-height: 1.7; 
-            display: -webkit-box; -webkit-line-clamp: 4; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;
+        .post-box {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: left;
         }
-        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; }
-        .meta-text { font-size: 0.75rem; color: var(--text-sub); font-weight: 600; }
-        .card-actions { display: flex; gap: 15px; }
-        
-        .skeleton { height: 140px; background: var(--border); border-radius: 20px; margin-bottom: 20px; position: relative; overflow: hidden; }
+
+        .post-box textarea {
+            width: 100%;
+            height: 110px;
+            border: none;
+            resize: none;
+            font-size: 1.15rem;
+            font-family: inherit;
+            color: var(--text-main);
+            outline: none;
+            background: transparent;
+            margin-bottom: 5px;
+        }
+
+        .btn-post {
+            background: var(--accent);
+            color: white;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 50px;
+            font-family: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            float: right;
+            box-shadow: 0 10px 20px -5px rgba(74, 110, 83, 0.3);
+            font-size: 1rem;
+        }
+
+        .btn-post:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+            box-shadow: 0 15px 30px -10px rgba(74, 110, 83, 0.4);
+        }
+
+        .card {
+            padding: 30px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: var(--shadow);
+        }
+
+        .card-category {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+        }
+
+        .card-content {
+            font-size: 1.15rem;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .meta-text {
+            font-size: 0.75rem;
+            color: var(--text-sub);
+            font-weight: 600;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .skeleton {
+            height: 140px;
+            background: var(--border);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- Premium Buttons --- */
+        .btn-action {
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-share {
+            background: var(--bg-body);
+            color: var(--text-sub);
+            border: 1px solid var(--border);
+        }
+
+        .btn-baton {
+            background: var(--accent-soft);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            filter: brightness(0.95);
+        }
+
+        .btn-action:active {
+            transform: scale(0.95);
+        }
 
         /* --- Views --- */
-        .view { display: none; }
-        .view.active { display: block; }
-        .btn-back { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-sub); font-weight: 700; cursor: pointer; font-size: 0.75rem; margin-bottom: 30px; padding: 10px 20px; border-radius: 50px; text-transform: uppercase; transition: var(--transition); }
-        .detail-post { background: var(--bg-card); padding: 40px; border-radius: 30px; border: 1px solid var(--border); box-shadow: var(--shadow); text-align: left; }
-        .detail-title { font-size: 1.3rem; font-weight: 400; line-height: 1.8; margin-bottom: 30px; color: var(--text-main); white-space: pre-wrap; word-break: break-word; }
-        .mission-log-header { font-size: 0.75rem; font-weight: 800; color: var(--text-sub); margin: 50px 0 25px; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        .btn-back {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-sub);
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.75rem;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+
+        .detail-post {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            text-align: left;
+        }
+
+        .detail-title {
+            font-size: 1.3rem;
+            font-weight: 400;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .mission-log-header {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: var(--text-sub);
+            margin: 50px 0 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
 
         /* --- Wisdom View (Sage) --- */
-        #wisdomView { text-align: center; padding: 60px 20px; background: var(--bg-card); border-radius: 30px; border: 1px solid var(--accent); box-shadow: var(--shadow); margin-top: 30px; }
-        .sage-icon { font-size: 4rem; margin-bottom: 20px; display: block; filter: drop-shadow(0 5px 15px rgba(74, 110, 83, 0.2)); }
-        .wisdom-text { font-size: 1.4rem; line-height: 1.8; color: var(--accent); margin-bottom: 40px; font-style: italic; font-weight: 300; }
+        #wisdomView {
+            text-align: center;
+            padding: 60px 20px;
+            background: var(--bg-card);
+            border-radius: 30px;
+            border: 1px solid var(--accent);
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+        }
+
+        .sage-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 5px 15px rgba(74, 110, 83, 0.2));
+        }
+
+        .wisdom-text {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--accent);
+            margin-bottom: 40px;
+            font-style: italic;
+            font-weight: 300;
+        }
 
         /* --- Modals & Overlays --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 10000; }
-        .modal { background: var(--bg-card); width: 95%; max-width: 480px; padding: 40px; border-radius: 32px; border: 1px solid var(--border); box-shadow: var(--shadow); animation: pop 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); text-align: center; }
-        @keyframes pop { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            width: 95%;
+            max-width: 480px;
+            padding: 40px;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            animation: pop 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            text-align: center;
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* --- Share Hub Grid --- */
+        .share-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 20px;
+            border-radius: 20px;
+            background: var(--bg-body);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .share-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .share-option span {
+            font-size: 1.5rem;
+        }
+
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* --- Share Cluster (Direct) --- */
+        .share-cluster {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-mini-share {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            background: var(--bg-body);
+            text-decoration: none;
+        }
+
+        .btn-mini-share:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-mini-share.fb {
+            color: #1877F2;
+        }
+
+        .btn-mini-share.line {
+            color: #06C755;
+        }
+
+        .btn-mini-share.x {
+            color: #000000;
+        }
+
+        .btn-mini-share.link {
+            color: var(--text-sub);
+        }
+
+        .btn-chain-fab {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            background: var(--accent);
+            color: white;
+            padding: 18px;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 15px 40px -10px rgba(74, 110, 83, 0.5);
+            z-index: 2000;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .btn-chain-fab:hover {
+            transform: translateX(-50%) translateY(-5px);
+            filter: brightness(1.1);
+        }
+
         @media (max-width: 600px) {
-            header { padding: 40px 20px 20px; }
-            h1 { font-size: 1.8rem; letter-spacing: -1px; }
-            .btn-post { width: 100%; float: none; margin-top: 10px; }
-            .btn-chain-fab { width: calc(100% - 30px); bottom: 15px; padding: 18px; font-size: 1rem; }
-            .card { padding: 25px; }
-            .cat-scroll-container { margin: 15px -20px 25px; padding: 5px 20px; }
+            header {
+                padding: 40px 20px 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                letter-spacing: -1px;
+            }
+
+            .btn-post {
+                width: 100%;
+                float: none;
+                margin-top: 10px;
+            }
+
+            .btn-chain-fab {
+                width: calc(100% - 30px);
+                bottom: 15px;
+                padding: 18px;
+                font-size: 1rem;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .cat-scroll-container {
+                margin: 15px -20px 25px;
+                padding: 5px 20px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <div id="newPostBanner" class="new-post-banner" onclick="location.reload()">✨ มีเรื่องราวดีๆ ผลิบานขึ้นมาใหม่...</div>
+    <div id="newPostBanner" class="new-post-banner" onclick="location.reload()">✨ มีเรื่องราวดีๆ ผลิบานขึ้นมาใหม่...
+    </div>
 
     <header>
         <div class="header-top">
@@ -165,7 +777,8 @@
             </div>
 
             <div class="post-box">
-                <textarea id="postInput" placeholder="วันนี้คุณมีความรู้ดีๆ อะไรที่อยากจะเปลี่ยนเป็นการส่งต่อความดีไหม?"></textarea>
+                <textarea id="postInput"
+                    placeholder="วันนี้คุณมีความรู้ดีๆ อะไรที่อยากจะเปลี่ยนเป็นการส่งต่อความดีไหม?"></textarea>
                 <div class="cat-scroll-container" id="catPicker">
                     <span class="cat-sel active" data-cat="พลังบวก">พลังบวก</span>
                     <span class="cat-sel" data-cat="ทั่วไป">ทั่วไป</span>
@@ -204,28 +817,39 @@
 
         <!-- NEW: Handbook Page View -->
         <div id="aboutView" class="view">
-            <div style="text-align:left"><button class="btn-back" onclick="navigateToFeed()">← กลับไปที่สวน</button></div>
+            <div style="text-align:left"><button class="btn-back" onclick="navigateToFeed()">← กลับไปที่สวน</button>
+            </div>
             <div class="detail-post" style="padding:40px;">
-                <h2 style="font-size:1.8rem; margin-bottom:30px; color:var(--text-main); letter-spacing: -1px;">คู่มือการเดินทาง 🌱</h2>
-                
+                <h2 style="font-size:1.8rem; margin-bottom:30px; color:var(--text-main); letter-spacing: -1px;">
+                    คู่มือการเดินทาง 🌱</h2>
+
                 <div class="about-section" style="margin-bottom:35px;">
-                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">จุดประสงค์ของเรา (Our Purpose)</h4>
-                    <p style="font-size:1rem; opacity:0.9;">เราสร้างพื้นที่ปลอดภัยสำหรับการเปลี่ยน "ความรู้" ให้กลายเป็น "ความดี" ที่จับต้องได้จริง เพื่อสร้างแรงกระเพื่อมเชิงบวกในสังคม</p>
+                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">
+                        จุดประสงค์ของเรา (Our Purpose)</h4>
+                    <p style="font-size:1rem; opacity:0.9;">เราสร้างพื้นที่ปลอดภัยสำหรับการเปลี่ยน "ความรู้" ให้กลายเป็น
+                        "ความดี" ที่จับต้องได้จริง เพื่อสร้างแรงกระเพื่อมเชิงบวกในสังคม</p>
                 </div>
 
                 <div class="about-section" style="margin-bottom:35px;">
-                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">ความสามารถของระบบ (Capabilities)</h4>
+                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">
+                        ความสามารถของระบบ (Capabilities)</h4>
                     <ul style="list-style:none; padding:0;">
-                        <li style="margin-bottom:15px;"><strong>🌱 สวนแห่งปัญญา:</strong> แบ่งปันความรู้ที่คุณมีให้กับโลกใบนี้ได้อย่างอิสระ</li>
-                        <li style="margin-bottom:15px;"><strong>🤝 การรับไม้ต่อ:</strong> เมื่อพบสิ่งที่มีประโยชน์ คุณสามารถเลือก "ทำความดีตอบแทน" (Giveback) เพื่อบันทึกความดีของคุณ</li>
-                        <li style="margin-bottom:15px;"><strong>✨ พลังใจรวม:</strong> ทุกการส่งต่อจะช่วยเพิ่ม "Sparks" ของชุมชนให้เบ่งบาน</li>
-                        <li style="margin-bottom:15px;"><strong>🛡️ AI ผู้ดูแล:</strong> มีระบบ AI ที่คอยแนะนำเนื้อหาให้สุภาพและปลอดภัย</li>
-                        <li style="margin-bottom:15px;"><strong>📱 แอปมือถือ:</strong> ติดตั้งเป็นแอปบนหน้าจอหลัก (PWA) เพื่อความสะดวก</li>
+                        <li style="margin-bottom:15px;"><strong>🌱 สวนแห่งปัญญา:</strong>
+                            แบ่งปันความรู้ที่คุณมีให้กับโลกใบนี้ได้อย่างอิสระ</li>
+                        <li style="margin-bottom:15px;"><strong>🤝 การรับไม้ต่อ:</strong> เมื่อพบสิ่งที่มีประโยชน์
+                            คุณสามารถเลือก "ทำความดีตอบแทน" (Giveback) เพื่อบันทึกความดีของคุณ</li>
+                        <li style="margin-bottom:15px;"><strong>✨ พลังใจรวม:</strong> ทุกการส่งต่อจะช่วยเพิ่ม "Sparks"
+                            ของชุมชนให้เบ่งบาน</li>
+                        <li style="margin-bottom:15px;"><strong>🛡️ AI ผู้ดูแล:</strong> มีระบบ AI
+                            ที่คอยแนะนำเนื้อหาให้สุภาพและปลอดภัย</li>
+                        <li style="margin-bottom:15px;"><strong>📱 แอปมือถือ:</strong> ติดตั้งเป็นแอปบนหน้าจอหลัก (PWA)
+                            เพื่อความสะดวก</li>
                     </ul>
                 </div>
 
                 <div class="about-section" style="margin-bottom:35px;">
-                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">กฎของหัวใจ (The Rules)</h4>
+                    <h4 style="color:var(--accent); text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">
+                        กฎของหัวใจ (The Rules)</h4>
                     <ul style="list-style:disc; padding-left:20px; opacity:0.9;">
                         <li><strong>แบ่งปัน:</strong> เน้นความรู้ที่เป็นประโยชน์ต่อผู้อื่น</li>
                         <li><strong>ส่งต่อ:</strong> เมื่อได้รับให้ตอบแทนด้วยความดีเล็กๆ</li>
@@ -233,13 +857,15 @@
                     </ul>
                 </div>
 
-                <button onclick="navigateToFeed()" class="btn-post" style="float:none; width:100%; margin-top:20px;">เริ่มการเดินทาง</button>
+                <button onclick="navigateToFeed()" class="btn-post"
+                    style="float:none; width:100%; margin-top:20px;">เริ่มการเดินทาง</button>
             </div>
             <div style="height:50px"></div>
         </div>
 
         <div id="detailView" class="view">
-            <div style="text-align:left"><button class="btn-back" onclick="navigateToFeed()">← กลับไปที่สวน</button></div>
+            <div style="text-align:left"><button class="btn-back" onclick="navigateToFeed()">← กลับไปที่สวน</button>
+            </div>
             <div id="detailContent" class="detail-post"></div>
             <div class="mission-log">
                 <div class="mission-log-header">พงศาวดารความดีงอกงาม</div>
@@ -257,22 +883,54 @@
         <div id="actionModal" class="modal" style="display:none;">
             <h2>รับไม้ต่อ</h2>
             <div class="input-group" style="text-align:left; margin-bottom:20px;">
-                <label style="font-size:0.8rem; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin-bottom:8px; display:block;">💬 ตอบกลับเพื่อขอบคุณ:</label>
-                <textarea id="replyText" class="modal-textarea" style="height:80px; width:100%; border:1px solid var(--border); background:var(--bg-body); color:var(--text-main); font-family:inherit; padding:15px; outline:none; border-radius:15px; resize:none;" placeholder="ขอบคุณสำหรับสิ่งดีๆ..."></textarea>
+                <label
+                    style="font-size:0.8rem; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin-bottom:8px; display:block;">💬
+                    ตอบกลับเพื่อขอบคุณ:</label>
+                <textarea id="replyText" class="modal-textarea"
+                    style="height:80px; width:100%; border:1px solid var(--border); background:var(--bg-body); color:var(--text-main); font-family:inherit; padding:15px; outline:none; border-radius:15px; resize:none;"
+                    placeholder="ขอบคุณสำหรับสิ่งดีๆ..."></textarea>
             </div>
             <div class="input-group" style="text-align:left; margin-bottom:20px;">
-                <label style="font-size:0.8rem; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin-bottom:8px; display:block;">✨ ความดีที่คุณจะทำตอบแทน (Giveback):</label>
-                <textarea id="kindnessText" class="modal-textarea" style="height:100px; width:100%; border:1px solid var(--border); background:var(--bg-body); color:var(--text-main); font-family:inherit; padding:15px; outline:none; border-radius:15px; resize:none;" placeholder="ความดีเล็กๆ ที่คุณตั้งใจจะทำต่อ..."></textarea>
+                <label
+                    style="font-size:0.8rem; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin-bottom:8px; display:block;">✨
+                    ความดีที่คุณจะทำตอบแทน (Giveback):</label>
+                <textarea id="kindnessText" class="modal-textarea"
+                    style="height:100px; width:100%; border:1px solid var(--border); background:var(--bg-body); color:var(--text-main); font-family:inherit; padding:15px; outline:none; border-radius:15px; resize:none;"
+                    placeholder="ความดีเล็กๆ ที่คุณตั้งใจจะทำต่อ..."></textarea>
             </div>
             <button id="confirmBtn" class="btn-post" style="float:none; width:100%;">รดน้ำให้ความดีเติบโต</button>
-            <button onclick="closeModals()" class="text-link" style="display:block; margin:20px auto 0; width:100%; text-align:center;">ไว้ก่อนนะ</button>
+            <button onclick="closeModals()" class="text-link"
+                style="display:block; margin:20px auto 0; width:100%; text-align:center;">ไว้ก่อนนะ</button>
+        </div>
+
+        <!-- Share Modal -->
+        <div id="shareModal" class="modal" style="display:none;">
+            <h2 style="letter-spacing:-1px">ส่งต่อแรงกระเพื่อม 🌿</h2>
+            <p style="font-size:0.9rem; color:var(--text-sub); margin-top:5px;">เลือกช่องทางที่คุณต้องการแชร์ความรู้นี้
+            </p>
+            <div class="share-grid">
+                <a id="shareFB" target="_blank" class="share-option"><span>🔵</span>
+                    <div class="share-label">Facebook</div>
+                </a>
+                <a id="shareLine" target="_blank" class="share-option"><span>🟢</span>
+                    <div class="share-label">Line</div>
+                </a>
+                <a id="shareX" target="_blank" class="share-option"><span>⚫</span>
+                    <div class="share-label">X / Twitter</div>
+                </a>
+                <div onclick="copyCurrentLink()" class="share-option"><span>🔗</span>
+                    <div class="share-label">คัดลอกลิงก์</div>
+                </div>
+            </div>
+            <button onclick="closeModals()" class="text-link"
+                style="display:block; margin:30px auto 0; width:100%; text-align:center;">ปิดหน้าต่าง</button>
         </div>
     </div>
 
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxKuHn2--Tjoa9_Xvg6dnJzKriPUo4ZoWe0SvhCdIzMfDJpkiE4t3Nun21MnEwVg2DJ/exec";
         const BANNED_KEYWORDS = [
-            'ขอเงิน', 'โอนเงิน', 'บริจาค', 'รับบริจาค', 'ขอบริจาค', 'ทำบุญ', 'ร่วมบุญ', 'เลขบัญชี', 
+            'ขอเงิน', 'โอนเงิน', 'บริจาค', 'รับบริจาค', 'ขอบริจาค', 'ทำบุญ', 'ร่วมบุญ', 'เลขบัญชี',
             'PromptPay', 'พร้อมเพย์', 'วอเลท', 'Wallet', 'ขอกู้', 'ขอยืม', 'ช่วยเหลือเงิน', 'เดือดร้อนเรื่องเงิน',
             'การเมือง', 'พรรค', 'เลือกตั้ง', 'รัฐบาล', 'นายก', 'ประท้วง', 'สถาบัน', 'ประชาธิปไตย', 'เผด็จการ'
         ];
@@ -284,7 +942,7 @@
         let selectedCat = 'พลังบวก';
 
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
+            navigator.serviceWorker.register('sw.js').catch(() => { });
         }
 
         function toast(msg) {
@@ -304,15 +962,15 @@
         function showView(view) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active', 'fade-in'));
             const active = document.getElementById(view + 'View');
-            if(active) active.classList.add('active', 'fade-in');
+            if (active) active.classList.add('active', 'fade-in');
             window.scrollTo(0, 0);
         }
 
         window.onhashchange = handleDeepLink;
         function handleDeepLink() {
             const hash = window.location.hash.substring(1);
-            if(hash && hash.length > 5) {
-                if(allPosts.length > 0) showDetail(hash);
+            if (hash && hash.length > 5) {
+                if (allPosts.length > 0) showDetail(hash);
                 else setTimeout(handleDeepLink, 500);
             } else { showView('feed'); }
         }
@@ -324,7 +982,7 @@
             localStorage.setItem('v27-theme', isDark ? 'dark' : 'light');
         }
         themeBtn.onclick = () => applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
-        if(localStorage.getItem('v27-theme') === 'dark') applyTheme(true);
+        if (localStorage.getItem('v27-theme') === 'dark') applyTheme(true);
 
         function openAbout() {
             showView('about');
@@ -341,32 +999,32 @@
         }
 
         async function fetchPosts(isPolling = false) {
-            if(allPosts.length === 0) document.getElementById('postsContainer').innerHTML = Array(3).fill('<div class="skeleton"></div>').join('');
-            if(SCRIPT_URL === "YOUR_APPS_SCRIPT_URL_HERE") { renderSeed(); return; }
+            if (allPosts.length === 0) document.getElementById('postsContainer').innerHTML = Array(3).fill('<div class="skeleton"></div>').join('');
+            if (SCRIPT_URL === "YOUR_APPS_SCRIPT_URL_HERE") { renderSeed(); return; }
             try {
                 const res = await fetch(SCRIPT_URL);
                 const json = await res.json();
-                if(json.status === 'success') {
+                if (json.status === 'success') {
                     const newPosts = json.data;
-                    if(isPolling && newPosts.length > 0 && newPosts[0].ID !== latestPostId) {
+                    if (isPolling && newPosts.length > 0 && newPosts[0].ID !== latestPostId) {
                         document.getElementById('newPostBanner').style.display = 'block';
                     }
                     allPosts = newPosts;
                     latestPostId = allPosts.length > 0 ? allPosts[0].ID : null;
                     document.getElementById('energyMeter').innerText = `🌲 ${json.totalSparks || 0} Sparks`;
                     updateUI();
-                    if(!isPolling) handleDeepLink();
+                    if (!isPolling) handleDeepLink();
                 }
-            } catch(e) {}
+            } catch (e) { }
         }
 
         setInterval(() => fetchPosts(true), 60000);
 
         function renderSeed() {
             allPosts = [
-                { ID: "s1", Content: "ลองใช้กฎ 20-20-20 เมื่อจ้องจอนานๆ: ช่วยถนอมสายตาได้เยี่ยมเลย!", Category: "สุขภาพ", SparkCount: 42, missions: [{reply:"ขอบคุณครับ", mission:"จะลองทำตามดู"}] },
+                { ID: "s1", Content: "ลองใช้กฎ 20-20-20 เมื่อจ้องจอนานๆ: ช่วยถนอมสายตาได้เยี่ยมเลย!", Category: "สุขภาพ", SparkCount: 42, missions: [{ reply: "ขอบคุณครับ", mission: "จะลองทำตามดู" }] },
                 { ID: "s2", Content: "การทำงานเป็นรอบ 25 นาที (Pomodoro) ช่วยให้โฟกัสได้ดีขึ้นและลดความเครียดสะสม", Category: "การเรียนรู้", SparkCount: 15, missions: [] },
-                { ID: "s3", Content: "วันนี้ลองหยุดฟังเสียงหัวใจตัวเองดูบ้างนะ... คุณทำดีที่สุดแล้ว :)", Category: "พลังบวก", SparkCount: 88, missions: [{reply:"ใจฟูมากครับ", mission:"จะแชร์ต่อ"}] }
+                { ID: "s3", Content: "วันนี้ลองหยุดฟังเสียงหัวใจตัวเองดูบ้างนะ... คุณทำดีที่สุดแล้ว :)", Category: "พลังบวก", SparkCount: 88, missions: [{ reply: "ใจฟูมากครับ", mission: "จะแชร์ต่อ" }] }
             ];
             document.getElementById('energyMeter').innerText = "🌲 145 Sparks (Simulation)";
             updateUI();
@@ -383,6 +1041,8 @@
             const cont = document.getElementById('postsContainer');
             cont.innerHTML = posts.length ? '' : '<div class="loader" style="text-align:center; padding:50px; opacity:0.5;">ไม่มีเมล็ดพันธุ์ในหมวดนี้... เริ่มวางคนแรกสิ!</div>';
             posts.forEach(p => {
+                const url = window.location.href.split('#')[0] + '#' + p.ID;
+                const text = `ลองอ่านเรื่องนี้ดูครับ: "${p.Content.substring(0, 50)}..."`;
                 const el = document.createElement('div');
                 el.className = 'card fade-in';
                 el.onclick = () => { window.location.hash = p.ID; showDetail(p.ID); };
@@ -392,8 +1052,13 @@
                     <div class="card-footer">
                         <div class="meta-text">รับส่งต่อแล้ว ${p.SparkCount} ครั้ง</div>
                         <div class="card-actions">
-                            <button class="text-link" style="font-weight:700; color:var(--text-sub)" onclick="event.stopPropagation(); shareIt('${p.ID}')">แชร์</button>
-                            <button class="text-link" style="color:var(--accent); font-weight:700" onclick="event.stopPropagation(); showDetail('${p.ID}'); setTimeout(openAction, 100)">รับไม้ต่อ 🤝</button>
+                            <div class="share-cluster">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" class="btn-mini-share fb" title="Share FB">🔵</a>
+                                <a href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}" target="_blank" class="btn-mini-share line" title="Share Line">🟢</a>
+                                <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}" target="_blank" class="btn-mini-share x" title="Share X">⚫</a>
+                                <div class="btn-mini-share link" onclick="event.stopPropagation(); copyDirectLink('${url}')" title="Copy Link">🔗</div>
+                            </div>
+                            <button class="btn-action btn-baton" onclick="event.stopPropagation(); showDetail('${p.ID}'); setTimeout(openAction, 100)">🤝 รับไม้ต่อ</button>
                         </div>
                     </div>
                 `;
@@ -403,15 +1068,30 @@
 
         function showDetail(id) {
             const p = allPosts.find(x => x.ID === id);
-            if(!p) { navigateToFeed(); return; }
+            if (!p) { navigateToFeed(); return; }
             currentPostId = id;
-            document.getElementById('detailContent').innerHTML = `<div class="card-category">${p.Category}</div><div class="detail-title">${p.Content}</div>`;
+
+            const url = window.location.href.split('#')[0] + '#' + id;
+            const text = `ลองอ่านเรื่องนี้ดูครับ: "${p.Content.substring(0, 50)}..."`;
+
+            document.getElementById('detailContent').innerHTML = `
+                <div class="card-category">${p.Category}</div>
+                <div class="detail-title">${p.Content}</div>
+                <div class="share-cluster" style="margin-top:40px; justify-content:center; border-top:1px solid var(--border); padding-top:30px;">
+                    <span style="font-size:0.8rem; font-weight:700; color:var(--text-sub); margin-right:10px; text-transform:uppercase; letter-spacing:1px;">ส่งต่อปัญญา:</span>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank" class="btn-mini-share fb" title="Share FB">🔵</a>
+                    <a href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}" target="_blank" class="btn-mini-share line" title="Share Line">🟢</a>
+                    <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}" target="_blank" class="btn-mini-share x" title="Share X">⚫</a>
+                    <div class="btn-mini-share link" onclick="copyDirectLink('${url}')" title="Copy Link">🔗</div>
+                </div>
+            `;
+
             const mList = document.getElementById('missionsList');
             mList.innerHTML = p.missions.length ? '' : '<div class="loader" style="text-align:center; opacity:0.5; margin-top:20px;">มาร่วมรดน้ำความดีคนแรกสิ!</div>';
             p.missions.slice().reverse().forEach(m => {
                 const item = document.createElement('div');
                 item.className = 'mission-item fade-in';
-                item.innerHTML = `${m.reply ? `<span class="m-reply">" ${m.reply} "</span>`:''}<div class="m-action">${m.mission}</div>`;
+                item.innerHTML = `${m.reply ? `<span class="m-reply">" ${m.reply} "</span>` : ''}<div class="m-action">${m.mission}</div>`;
                 mList.appendChild(item);
             });
             showView('detail');
@@ -419,22 +1099,22 @@
 
         document.getElementById('postBtn').onclick = async () => {
             const val = document.getElementById('postInput').value.trim();
-            if(!val) return;
+            if (!val) return;
 
-            const btn = document.getElementById('postBtn'); 
+            const btn = document.getElementById('postBtn');
             btn.disabled = true;
             btn.style.opacity = '0.5';
             toast("กำลังปรึกษาผู้พิทักษ์สวน... โปรดรอสักครู่นะครับ 🌿");
 
             try {
-                if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
-                    const res = await fetch(SCRIPT_URL, { 
-                        method: 'POST', 
-                        mode: 'cors', 
-                        body: JSON.stringify({ action: 'addPost', content: val, category: selectedCat }) 
+                if (SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
+                    const res = await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'cors',
+                        body: JSON.stringify({ action: 'addPost', content: val, category: selectedCat })
                     });
                     const result = await res.json();
-                    
+
                     if (result.status === 'success') {
                         toast("เมล็ดพันธุ์ของคุณถูกวางลงในสวนแล้ว! ✨");
                         document.getElementById('postInput').value = '';
@@ -445,10 +1125,10 @@
                         document.getElementById('wisdomText').innerText = result.message || "เมล็ดพันธุ์นี้อาจยังไม่เหมาะกับสวนในตอนนี้ ลองแชร์เรื่องราวอื่นดูไหมครับ?";
                         showView('wisdom');
                     }
-                } else { 
-                    toast("จำลองการโพสต์สำเร็จ"); 
-                    document.getElementById('postInput').value = ''; 
-                    fetchPosts(); 
+                } else {
+                    toast("จำลองการโพสต์สำเร็จ");
+                    document.getElementById('postInput').value = '';
+                    fetchPosts();
                 }
             } catch (err) {
                 console.error(err);
@@ -465,6 +1145,8 @@
         }
         function closeModals() {
             document.getElementById('modalOverlay').style.display = 'none';
+            document.getElementById('actionModal').style.display = 'none';
+            document.getElementById('shareModal').style.display = 'none';
         }
         function openAbout() {
             showView('about');
@@ -473,26 +1155,26 @@
         document.getElementById('fabChain').onclick = openAction;
         document.getElementById('confirmBtn').onclick = async () => {
             const r = document.getElementById('replyText').value.trim(), k = document.getElementById('kindnessText').value.trim();
-            if(!k) { toast("บอกเราหน่อยว่าจะทำความดีอะไร :)"); return; }
-            const btn = document.getElementById('confirmBtn'); 
+            if (!k) { toast("บอกเราหน่อยว่าจะทำความดีอะไร :)"); return; }
+            const btn = document.getElementById('confirmBtn');
             btn.disabled = true;
             btn.style.opacity = '0.5';
 
             try {
-                if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
-                    await fetch(SCRIPT_URL, { 
-                        method:'POST', 
+                if (SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST',
                         mode: 'no-cors',
-                        body: JSON.stringify({action:'incrementSpark', id:currentPostId, replyText:r, missionText:k}) 
+                        body: JSON.stringify({ action: 'incrementSpark', id: currentPostId, replyText: r, missionText: k })
                     });
                     closeModals();
-                    toast("ความดีของคุณงอกงามแล้ว 🌿"); 
+                    toast("ความดีของคุณงอกงามแล้ว 🌿");
                     setTimeout(fetchPosts, 3000);
                     setTimeout(() => showDetail(currentPostId), 3500);
-                } else { 
-                    toast("จำลองการรับไม้ต่อสำเร็จ"); 
-                    closeModals(); 
-                    fetchPosts(); 
+                } else {
+                    toast("จำลองการรับไม้ต่อสำเร็จ");
+                    closeModals();
+                    fetchPosts();
                 }
             } catch (err) {
                 console.error(err);
@@ -503,19 +1185,40 @@
             }
         }
 
+        let pendingShareUrl = "";
         function shareIt(id) {
+            const p = allPosts.find(x => x.ID === id);
             const url = window.location.href.split('#')[0] + '#' + id;
+            const text = p ? `ลองอ่านเรื่องนี้ดูครับ: "${p.Content.substring(0, 50)}..."` : "มีความรู้ดีๆ มาฝากครับ";
+            pendingShareUrl = url;
+
+            document.getElementById('shareFB').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+            document.getElementById('shareLine').href = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}`;
+            document.getElementById('shareX').href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.getElementById('shareModal').style.display = 'block';
+            document.getElementById('actionModal').style.display = 'none';
+        }
+
+        function copyCurrentLink() {
+            navigator.clipboard.writeText(pendingShareUrl);
+            toast("คัดลอกลิงก์เรียบร้อย 🔗");
+            closeModals();
+        }
+
+        function copyDirectLink(url) {
             navigator.clipboard.writeText(url);
             toast("คัดลอกลิงก์เรียบร้อย 🔗");
         }
 
         document.getElementById('filters').onclick = (e) => {
-            const b = e.target.closest('.filter-btn'); if(!b) return;
+            const b = e.target.closest('.filter-btn'); if (!b) return;
             document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
             b.classList.add('active'); activeFilter = b.dataset.cat; updateUI();
         }
         document.getElementById('catPicker').onclick = (e) => {
-            const s = e.target.closest('.cat-sel'); if(!s) return;
+            const s = e.target.closest('.cat-sel'); if (!s) return;
             document.querySelectorAll('.cat-sel').forEach(x => x.classList.remove('active'));
             s.classList.add('active'); selectedCat = s.dataset.cat;
         }
@@ -524,4 +1227,5 @@
         fetchPosts();
     </script>
 </body>
+
 </html>
