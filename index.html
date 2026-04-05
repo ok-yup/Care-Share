@@ -937,7 +937,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzk6D4XZWNa2RpKikrOuAFT8zXNQRUfdkx4kf3N987JOoQUG0kQIdflVWr_Q0t3dmu9/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoXjA79QjZLTlZ0VJUFXa50dRtDW2JasV_Lvq5hmZrLDazoCsUL_IarJtP7GmtwOFi/exec";
         const BANNED_KEYWORDS = [
             'ขอเงิน', 'โอนเงิน', 'บริจาค', 'รับบริจาค', 'ขอบริจาค', 'ทำบุญ', 'ร่วมบุญ', 'เลขบัญชี',
             'PromptPay', 'พร้อมเพย์', 'วอเลท', 'Wallet', 'ขอกู้', 'ขอยืม', 'ช่วยเหลือเงิน', 'เดือดร้อนเรื่องเงิน',
@@ -1126,7 +1126,7 @@
                             action: 'addPost', 
                             content: val, 
                             category: selectedCat,
-                            author: 'Care Share' // Currently set to post as admin for initial test
+                            author: '' // Removed hardcoded 'Care Share' - now controlled manually in Google Sheets
                         })
                     });
                     const result = await res.json();
