@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Care Share | สังคมดีเริ่มต้นที่เรา</title>
+    
+    <!-- SEO & Social Sharing (OpenGraph) -->
+    <meta name="description" content="The Ripple of Wisdom - หนึ่งความรู้ส่งต่อ... ร้อยความดีงอกงาม พื้นที่ปลอดภัยสำหรับการแบ่งปัน">
+    <meta property="og:title" content="Care Share | สังคมแห่งการแบ่งปันที่เปี่ยมด้วยพลัง">
+    <meta property="og:description" content="ร่วมเป็นส่วนหนึ่งของการส่งต่อความรู้และสร้างแรงบันดาลใจให้เกิดความดีในสังคม">
+    <meta property="og:image" content="icon.png">
+    <meta property="og:type" content="website">
+
+    <!-- PWA Support -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.png" type="image/png">
+    <meta name="theme-color" content="#4a6e53">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #fdfbf7;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(253, 251, 247, 0.85);
+            --text-main: #6c5b49;
+            --text-sub: #8c7e6a;
+            --accent: #4a6e53;
+            --accent-soft: rgba(74, 110, 83, 0.1);
+            --border: #e8e1d5;
+            --shadow: 0 10px 30px -5px rgba(74, 110, 83, 0.08);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0d140b;
+            --bg-card: #1a2419;
+            --bg-glass: rgba(13, 20, 11, 0.85);
+            --text-main: #f5f1e9;
+            --text-sub: #a8c3a0;
+            --accent: #8fb495;
+            --accent-soft: rgba(143, 180, 149, 0.2);
+            --border: rgba(168, 195, 160, 0.15);
+            --shadow: 0 15px 40px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Outfit', 'Prompt', sans-serif; background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; min-height: 100vh; transition: background-color 0.5s ease; overflow-x: hidden; }
+
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- New Post Banner --- */
+        .new-post-banner { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--accent); color: white; padding: 10px 25px; border-radius: 50px; font-weight: 700; font-size: 0.85rem; cursor: pointer; box-shadow: 0 15px 40px -10px rgba(74, 110, 83, 0.5); z-index: 5000; display: none; border: 2px solid white; animation: slideDown 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); }
+        @keyframes slideDown { from { top: -60px; } to { top: 20px; } }
+
+        /* --- Energy Meter & Header --- */
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .energy-meter { font-size: 0.75rem; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 5px 15px; border-radius: 50px; border: 1px solid var(--accent); white-space: nowrap; }
+
+        header { padding: 40px 20px 40px; text-align: center; max-width: 600px; margin: 0 auto; position: relative; }
+        .header-actions { display: flex; gap: 10px; align-items: center; justify-content: center; margin-bottom: 15px; }
+        .theme-toggle, .btn-info { cursor: pointer; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-main); border: 1px solid var(--accent); padding: 6px 18px; border-radius: 50px; background: var(--bg-card); backdrop-filter: blur(8px); transition: var(--transition); display: flex; align-items: center; gap: 5px; box-shadow: var(--shadow); }
+        .btn-info { background: var(--accent); color: white; border-color: var(--accent); }
+        .theme-toggle:hover, .btn-info:hover { transform: scale(1.05); filter: brightness(1.1); }
+        
+        .guide-tip { position: absolute; top: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap; font-size: 0.6rem; color: var(--accent); font-weight: 800; animation: pulse 2s infinite; text-transform: uppercase; letter-spacing: 1px; }
+        @keyframes pulse { 0% { opacity: 0.4; transform: translate(-50%, 0); } 50% { opacity: 1; transform: translate(-50%, -5px); } 100% { opacity: 0.4; transform: translate(-50%, 0); } }
+        
+        .container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
+        h1 { font-size: 2.3rem; font-weight: 600; margin-bottom: 5px; cursor: pointer; letter-spacing: -2px; background: linear-gradient(135deg, var(--text-main), var(--accent)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 30px; font-weight: 400; line-height: 1.4; }
+
+        /* --- Concept Card --- */
+        .concept-card { background: var(--accent-soft); border: 1px solid var(--accent); padding: 25px; border-radius: 20px; margin-bottom: 30px; position: relative; text-align: left; }
+        .concept-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+        .concept-card p { font-size: 0.85rem; color: var(--text-main); line-height: 1.6; }
+        .close-concept { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 1.2rem; font-weight: 400; opacity: 0.4; line-height: 1; }
+        .close-concept:hover { opacity: 1; color: var(--accent); }
+
+        /* --- Scrollable Lists (Neat) --- */
+        .search-area { position: sticky; top: 0; background: var(--bg-glass); backdrop-filter: blur(12px); z-index: 100; margin: 0 -20px 30px; padding: 15px 20px; border-bottom: 1px solid var(--border); }
+        .search-input { width: 100%; padding: 10px 0; border: none; background: transparent; color: var(--text-main); font-family: inherit; font-size: 1.1rem; outline: none; }
+        
+        .cat-scroll-container { margin: 15px -30px 25px; padding: 5px 30px; overflow-x: auto; display: flex; gap: 8px; scrollbar-width: none; -ms-overflow-style: none; }
+        .cat-scroll-container::-webkit-scrollbar { display: none; }
+        
+        .filter-btn, .cat-sel { white-space: nowrap; font-size: 0.8rem; font-weight: 600; cursor: pointer; color: var(--text-sub); border: 1px solid var(--border); background: var(--bg-card); padding: 7px 18px; border-radius: 50px; transition: var(--transition); }
+        .filter-btn.active, .cat-sel.active { background: var(--accent); color: white; border-color: var(--accent); transform: scale(1.05); }
+
+        /* --- Creator & Cards --- */
+        .post-box { background: var(--bg-card); border-radius: 24px; padding: 30px; margin-bottom: 40px; border: 1px solid var(--border); box-shadow: var(--shadow); transition: var(--transition); text-align: left; }
+        .post-box textarea { width: 100%; height: 110px; border: none; resize: none; font-size: 1.15rem; font-family: inherit; color: var(--text-main); outline: none; background: transparent; margin-bottom: 5px; }
+        
+        .btn-post { background: var(--accent); color: white; padding: 14px 40px; border: none; border-radius: 50px; font-family: inherit; font-weight: 600; cursor: pointer; transition: var(--transition); float: right; box-shadow: 0 10px 20px -5px rgba(74, 110, 83, 0.3); font-size: 1rem; }
+        .btn-post:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 15px 30px -10px rgba(74, 110, 83, 0.4); }
+
+        .card { padding: 30px; background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; transition: var(--transition); cursor: pointer; text-align: left; }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: var(--shadow); }
+        .card-category { font-size: 0.7rem; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1.5px; }
+        .card-content { 
+            font-size: 1.15rem; color: var(--text-main); white-space: pre-wrap; margin-bottom: 20px; line-height: 1.7; 
+            display: -webkit-box; -webkit-line-clamp: 4; line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;
+        }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; }
+        .meta-text { font-size: 0.75rem; color: var(--text-sub); font-weight: 600; }
+        .card-actions { display: flex; gap: 15px; }
+        
+        .skeleton { height: 140px; background: var(--border); border-radius: 20px; margin-bottom: 20px; position: relative; overflow: hidden; }
+
+        /* --- Views --- */
+        .view { display: none; }
+        .view.active { display: block; }
+        .btn-back { background: var(--bg-card); border: 1px solid var(--border); color: var(--text-sub); font-weight: 700; cursor: pointer; font-size: 0.75rem; margin-bottom: 30px; padding: 10px 20px; border-radius: 50px; text-transform: uppercase; transition: var(--transition); }
+        .detail-post { background: var(--bg-card); padding: 40px; border-radius: 30px; border: 1px solid var(--border); box-shadow: var(--shadow); text-align: left; }
+        .detail-title { font-size: 1.3rem; font-weight: 400; line-height: 1.8; margin-bottom: 30px; color: var(--text-main); white-space: pre-wrap; word-break: break-word; }
+        .mission-log-header { font-size: 0.75rem; font-weight: 800; color: var(--text-sub); margin: 50px 0 25px; text-transform: uppercase; letter-spacing: 2px; text-align: center; }
+
+        /* --- Modals --- */
+        .modal { background: var(--bg-card); width: 95%; max-width: 480px; padding: 40px; border-radius: 32px; border: 1px solid var(--border); box-shadow: var(--shadow); animation: pop 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); text-align: center; }
+        
+        @media (max-width: 600px) {
+            header { padding: 40px 20px 20px; }
+            h1 { font-size: 1.8rem; letter-spacing: -1px; }
+            .btn-post { width: 100%; float: none; margin-top: 10px; }
+            .btn-chain-fab { width: calc(100% - 30px); bottom: 15px; padding: 18px; font-size: 1rem; }
+            .card { padding: 25px; }
+            .cat-scroll-container { margin: 15px -20px 25px; padding: 5px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="newPostBanner" class="new-post-banner" onclick="location.reload()">✨ มีเรื่องราวดีๆ ผลิบานขึ้นมาใหม่...</div>
+
+    <header>
+        <div class="header-top">
+            <div id="energyMeter" class="energy-meter">🌲 0 Sparks</div>
+            <div class="header-actions" style="position:relative;">
+                <div class="guide-tip">อ่านกฎที่นี่ ✨</div>
+                <div class="btn-info" onclick="openAbout()">📖 คู่มือ</div>
+                <div class="theme-toggle" id="themeToggle">Dark</div>
+            </div>
+        </div>
+        <h1 onclick="navigateToFeed()">Care Share</h1>
+        <p class="tagline">The Ripple of Wisdom<br>หนึ่งความรู้ส่งต่อ... ร้อยความดีงอกงาม</p>
+    </header>
+
+    <main class="container">
+        <div id="feedView" class="view active">
+            <div class="concept-card" id="introCard">
+                <span class="close-concept" onclick="this.parentElement.style.display='none'">×</span>
+                <h3>เมล็ดพันธุ์ความรู้ สู่ป่าแห่งการแบ่งปัน</h3>
+                <p>แชร์ความรู้ที่เป็นประโยชน์ และรดน้ำความดีให้งอกงามผ่านการส่งต่อเรื่องราวดีๆ ให้ผู้อื่น</p>
+            </div>
+
+            <div class="post-box">
+                <textarea id="postInput" placeholder="วันนี้คุณมีความรู้ดีๆ อะไรที่อยากจะเปลี่ยนเป็นการส่งต่อความดีไหม?"></textarea>
+                <div class="cat-scroll-container" id="catPicker">
+                    <span class="cat-sel active" data-cat="พลังบวก">พลังบวก</span>
+                    <span class="cat-sel" data-cat="ทั่วไป">ทั่วไป</span>
+                    <span class="cat-sel" data-cat="การเรียนรู้">การเรียนรู้</span>
+                    <span class="cat-sel" data-cat="ไอเดีย">ไอเดีย</span>
+                    <span class="cat-sel" data-cat="สุขภาพ">สุขภาพ</span>
+                    <span class="cat-sel" data-cat="สิ่งแวดล้อม">สิ่งแวดล้อม</span>
+                    <span class="cat-sel" data-cat="ปรัชญา">ปรัชญา</span>
+                </div>
+                <div style="overflow:auto"><button id="postBtn" class="btn-post">วางเมล็ดพันธุ์</button></div>
+            </div>
+
+            <div class="search-area">
+                <input type="text" id="searchInput" class="search-input" placeholder="ค้นหาความรู้ที่น่าสนใจ...">
+                <div class="cat-scroll-container" id="filters">
+                    <span class="filter-btn active" data-cat="all">ทั้งหมด</span>
+                    <span class="filter-btn" data-cat="พลังบวก">พลังบวก</span>
+                    <span class="filter-btn" data-cat="ทั่วไป">ทั่วไป</span>
+                    <span class="filter-btn" data-cat="การเรียนรู้">การเรียนรู้</span>
+                    <span class="filter-btn" data-cat="ไอเดีย">ไอเดีย</span>
+                    <span class="filter-btn" data-cat="สุขภาพ">สุขภาพ</span>
+                    <span class="filter-btn" data-cat="สิ่งแวดล้อม">สิ่งแวดล้อม</span>
+                    <span class="filter-btn" data-cat="ปรัชญา">ปรัชญา</span>
+                </div>
+            </div>
+
+            <div id="postsContainer"></div>
+        </div>
+
+        <div id="detailView" class="view">
+            <div style="text-align:left"><button class="btn-back" onclick="navigateToFeed()">← กลับไปที่สวน</button></div>
+            <div id="detailContent" class="detail-post"></div>
+            <div class="mission-log">
+                <div class="mission-log-header">พงศาวดารความดีงอกงาม</div>
+                <div id="missionsList"></div>
+            </div>
+            <div style="height:100px"></div>
+            <button id="fabChain" class="btn-chain-fab">รับไม้ต่อเรื่องนี้ 🤝</button>
+        </div>
+    </main>
+
+    <div id="toastContainer" class="toast-container"></div>
+
+    <div id="modalOverlay" class="modal-overlay">
+        <!-- Handbook Modal -->
+        <div id="aboutModal" class="modal" style="display:none; overflow-y:auto;">
+            <h2 style="font-size:1.6rem; margin-bottom:25px; color:var(--text-main);">คู่มือการเดินทาง 🌱</h2>
+            <div class="about-section">
+                <h4>จุดประสงค์ของเรา (Our Purpose)</h4>
+                <p>สร้างพื้นที่ปลอดภัยสำหรับการเปลี่ยน "ความรู้" ให้กลายเป็น "ความดี" ที่จับต้องได้จริง</p>
+            </div>
+            <div class="about-section">
+                <h4>ความสามารถของระบบ (Capabilities)</h4>
+                <ul>
+                    <li><strong>สวนแห่งปัญญา:</strong> แบ่งปันความรู้ที่เป็นประโยชน์ได้ทันทีโดยนิรนาม</li>
+                    <li><strong>การรับไม้ต่อ:</strong> เมื่อได้รับความรู้ สามารถเลือก "ทำความดีตอบแทน" เพื่อบันทึกลงในพงศาวดารความดี</li>
+                    <li><strong>พลังใจรวม:</strong> ทุกการส่งต่อจะช่วยเพิ่ม "Sparks" หรือพลังใจให้ชุมชนเบ่งบาน</li>
+                    <li><strong>AI คัดกรอง:</strong> มีระบบ AI "ผู้ดูแล" ที่คอยดูแลเนื้อหาให้สุภาพและปลอดภัยอย่างนุ่มนวล</li>
+                    <li><strong>แอปมือถือ (PWA):</strong> ติดตั้งลงบนหน้าจอหลักได้เหมือนแอปจริงเพื่อการใช้งานที่ลื่นไหล</li>
+                </ul>
+            </div>
+            <div class="about-section">
+                <h4>กฎของหัวใจ (The Rules)</h4>
+                <ul>
+                    <li><strong>แชร์ปัญญา:</strong> แบ่งปันความรู้ที่เป็นประโยชน์</li>
+                    <li><strong>รดน้ำความดี:</strong> เมื่อได้รับความรู้ ให้ตอบแทนด้วยการทำความดีเล็กๆ น้อยๆ เพื่อผู้อื่น</li>
+                    <li><strong>รักษาพื้นที่:</strong> งดเรื่องการเมือง การระดมทุน และถ้อยคำที่บั่นทอนกำลังใจ</li>
+                    <li><strong>นิรนามแต่จริงใจ:</strong> โฟกัสที่สิ่งดีๆ ที่คุณส่งต่อ</li>
+                </ul>
+            </div>
+            <button onclick="closeModals()" class="btn-post" style="float:none; width:100%; margin-top:10px;">เข้าใจและร่วมเดินทาง</button>
+        </div>
+
+        <!-- Action Modal -->
+        <div id="actionModal" class="modal" style="display:none;">
+            <h2>รับไม้ต่อ</h2>
+            <div class="input-group" style="text-align:left; margin-bottom:20px;">
+                <label style="font-size:0.8rem; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin-bottom:8px; display:block;">💬 ตอบกลับเพื่อขอบคุณ:</label>
+                <textarea id="replyText" class="modal-textarea" style="height:80px; width:100%; border:1px solid var(--border); background:var(--bg-body); color:var(--text-main); font-family:inherit; padding:15px; outline:none; border-radius:15px; resize:none;" placeholder="ขอบคุณสำหรับสิ่งดีๆ..."></textarea>
+            </div>
+            <div class="input-group" style="text-align:left; margin-bottom:20px;">
+                <label style="font-size:0.8rem; font-weight:700; color:var(--text-sub); text-transform:uppercase; margin-bottom:8px; display:block;">✨ ความดีที่คุณจะทำตอบแทน (Giveback):</label>
+                <textarea id="kindnessText" class="modal-textarea" style="height:100px; width:100%; border:1px solid var(--border); background:var(--bg-body); color:var(--text-main); font-family:inherit; padding:15px; outline:none; border-radius:15px; resize:none;" placeholder="ความดีเล็กๆ ที่คุณตั้งใจจะทำต่อ..."></textarea>
+            </div>
+            <button id="confirmBtn" class="btn-post" style="float:none; width:100%;">รดน้ำให้ความดีเติบโต</button>
+            <button onclick="closeModals()" class="text-link" style="display:block; margin:20px auto 0; width:100%; text-align:center;">ไว้ก่อนนะ</button>
+        </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxNfFfxUJGUvqgKzFwGxE1nByHjS7vzAqgSmdB5ee8yHks4BDgeUmz0Kh7KSZFk5lRJ/exec";
+        let allPosts = [];
+        let latestPostId = null;
+        let currentPostId = null;
+        let activeFilter = 'all';
+        let selectedCat = 'พลังบวก';
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+
+        function toast(msg) {
+            const container = document.getElementById('toastContainer');
+            const el = document.createElement('div');
+            el.className = 'toast';
+            el.innerText = msg;
+            container.appendChild(el);
+            setTimeout(() => { el.style.opacity = '0'; setTimeout(() => el.remove(), 300); }, 3000);
+        }
+
+        function navigateToFeed() {
+            window.location.hash = '';
+            showView('feed');
+        }
+
+        function showView(view) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active', 'fade-in'));
+            const active = document.getElementById(view + 'View');
+            if(active) active.classList.add('active', 'fade-in');
+            window.scrollTo(0, 0);
+        }
+
+        window.onhashchange = handleDeepLink;
+        function handleDeepLink() {
+            const hash = window.location.hash.substring(1);
+            if(hash && hash.length > 5) {
+                if(allPosts.length > 0) showDetail(hash);
+                else setTimeout(handleDeepLink, 500);
+            } else { showView('feed'); }
+        }
+
+        const themeBtn = document.getElementById('themeToggle');
+        const applyTheme = (isDark) => {
+            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            themeBtn.innerText = isDark ? 'Lively Dark' : 'Lively Light';
+            localStorage.setItem('v27-theme', isDark ? 'dark' : 'light');
+        }
+        themeBtn.onclick = () => applyTheme(document.documentElement.getAttribute('data-theme') !== 'dark');
+        if(localStorage.getItem('v27-theme') === 'dark') applyTheme(true);
+
+        function openAbout() {
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.getElementById('aboutModal').style.display = 'block';
+            document.getElementById('actionModal').style.display = 'none';
+        }
+        function openAction() {
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.getElementById('aboutModal').style.display = 'none';
+            document.getElementById('actionModal').style.display = 'block';
+        }
+        function closeModals() {
+            document.getElementById('modalOverlay').style.display = 'none';
+            document.getElementById('aboutModal').style.display = 'none';
+            document.getElementById('actionModal').style.display = 'none';
+        }
+
+        async function fetchPosts(isPolling = false) {
+            if(allPosts.length === 0) document.getElementById('postsContainer').innerHTML = Array(3).fill('<div class="skeleton"></div>').join('');
+            if(SCRIPT_URL === "YOUR_APPS_SCRIPT_URL_HERE") { renderSeed(); return; }
+            try {
+                const res = await fetch(SCRIPT_URL);
+                const json = await res.json();
+                if(json.status === 'success') {
+                    const newPosts = json.data;
+                    if(isPolling && newPosts.length > 0 && newPosts[0].ID !== latestPostId) {
+                        document.getElementById('newPostBanner').style.display = 'block';
+                    }
+                    allPosts = newPosts;
+                    latestPostId = allPosts.length > 0 ? allPosts[0].ID : null;
+                    document.getElementById('energyMeter').innerText = `🌲 ${json.totalSparks || 0} Sparks`;
+                    updateUI();
+                    if(!isPolling) handleDeepLink();
+                }
+            } catch(e) {}
+        }
+
+        setInterval(() => fetchPosts(true), 60000);
+
+        function renderSeed() {
+            allPosts = [
+                { ID: "s1", Content: "ลองใช้กฎ 20-20-20 เมื่อจ้องจอนานๆ: ช่วยถนอมสายตาได้เยี่ยมเลย!", Category: "สุขภาพ", SparkCount: 42, missions: [{reply:"ขอบคุณครับ", mission:"จะลองทำตามดู"}] },
+                { ID: "s2", Content: "การทำงานเป็นรอบ 25 นาที (Pomodoro) ช่วยให้โฟกัสได้ดีขึ้นและลดความเครียดสะสม", Category: "การเรียนรู้", SparkCount: 15, missions: [] },
+                { ID: "s3", Content: "วันนี้ลองหยุดฟังเสียงหัวใจตัวเองดูบ้างนะ... คุณทำดีที่สุดแล้ว :)", Category: "พลังบวก", SparkCount: 88, missions: [{reply:"ใจฟูมากครับ", mission:"จะแชร์ต่อ"}] }
+            ];
+            document.getElementById('energyMeter').innerText = "🌲 145 Sparks (Simulation)";
+            updateUI();
+            handleDeepLink();
+        }
+
+        function updateUI() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allPosts.filter(p => (activeFilter === 'all' || p.Category === activeFilter) && p.Content.toLowerCase().includes(q));
+            renderList(filtered);
+        }
+
+        function renderList(posts) {
+            const cont = document.getElementById('postsContainer');
+            cont.innerHTML = posts.length ? '' : '<div class="loader" style="text-align:center; padding:50px; opacity:0.5;">ไม่มีเมล็ดพันธุ์ในหมวดนี้... เริ่มวางคนแรกสิ!</div>';
+            posts.forEach(p => {
+                const el = document.createElement('div');
+                el.className = 'card fade-in';
+                el.onclick = () => { window.location.hash = p.ID; showDetail(p.ID); };
+                el.innerHTML = `
+                    <div class="card-category">${p.Category}</div>
+                    <div class="card-content">${p.Content}</div>
+                    <div class="card-footer">
+                        <div class="meta-text">รับส่งต่อแล้ว ${p.SparkCount} ครั้ง</div>
+                        <div class="card-actions">
+                            <button class="text-link" style="font-weight:700; color:var(--text-sub)" onclick="event.stopPropagation(); shareIt('${p.ID}')">แชร์</button>
+                            <button class="text-link" style="color:var(--accent); font-weight:700">รับไม้ต่อ 🤝</button>
+                        </div>
+                    </div>
+                `;
+                cont.appendChild(el);
+            });
+        }
+
+        function showDetail(id) {
+            const p = allPosts.find(x => x.ID === id);
+            if(!p) { navigateToFeed(); return; }
+            currentPostId = id;
+            document.getElementById('detailContent').innerHTML = `<div class="card-category">${p.Category}</div><div class="detail-title">${p.Content}</div>`;
+            const mList = document.getElementById('missionsList');
+            mList.innerHTML = p.missions.length ? '' : '<div class="loader" style="text-align:center; opacity:0.5; margin-top:20px;">มาร่วมรดน้ำความดีคนแรกสิ!</div>';
+            p.missions.slice().reverse().forEach(m => {
+                const item = document.createElement('div');
+                item.className = 'mission-item fade-in';
+                item.innerHTML = `${m.reply ? `<span class="m-reply">" ${m.reply} "</span>`:''}<div class="m-action">${m.mission}</div>`;
+                mList.appendChild(item);
+            });
+            showView('detail');
+        }
+
+        document.getElementById('postBtn').onclick = async () => {
+            const val = document.getElementById('postInput').value.trim();
+            if(!val) return;
+            const btn = document.getElementById('postBtn'); btn.disabled = true;
+            if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
+                const res = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({action:'addPost', content:val, category:selectedCat}) });
+                const json = await res.json();
+                if(json.status === 'success') {
+                    document.getElementById('postInput').value = '';
+                    toast("วางเมล็ดพันธุ์เรียบร้อย 🪴"); fetchPosts();
+                } else { toast(json.message); }
+            } else { toast("จำลองการโพสต์สำเร็จ"); document.getElementById('postInput').value = ''; fetchPosts(); }
+            btn.disabled = false;
+        }
+
+        document.getElementById('fabChain').onclick = openAction;
+        document.getElementById('confirmBtn').onclick = async () => {
+            const r = document.getElementById('replyText').value.trim(), k = document.getElementById('kindnessText').value.trim();
+            if(!k) { toast("บอกเราหน่อยว่าจะทำความดีอะไร :)"); return; }
+            const btn = document.getElementById('confirmBtn'); btn.disabled = true;
+            if(SCRIPT_URL !== "YOUR_APPS_SCRIPT_URL_HERE") {
+                const res = await fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify({action:'incrementSpark', id:currentPostId, replyText:r, missionText:k}) });
+                const json = await res.json();
+                if(json.status === 'success') {
+                    closeModals();
+                    toast("ความดีของคุณงอกงามแล้ว 🌿"); fetchPosts();
+                    setTimeout(() => showDetail(currentPostId), 500);
+                } else { toast(json.message); }
+            } else { toast("จำลองการรับไม้ต่อสำเร็จ"); closeModals(); fetchPosts(); }
+            btn.disabled = false;
+        }
+
+        function shareIt(id) {
+            const url = window.location.href.split('#')[0] + '#' + id;
+            navigator.clipboard.writeText(url);
+            toast("คัดลอกลิงก์เรียบร้อย 🔗");
+        }
+
+        document.getElementById('filters').onclick = (e) => {
+            const b = e.target.closest('.filter-btn'); if(!b) return;
+            document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+            b.classList.add('active'); activeFilter = b.dataset.cat; updateUI();
+        }
+        document.getElementById('catPicker').onclick = (e) => {
+            const s = e.target.closest('.cat-sel'); if(!s) return;
+            document.querySelectorAll('.cat-sel').forEach(x => x.classList.remove('active'));
+            s.classList.add('active'); selectedCat = s.dataset.cat;
+        }
+        document.getElementById('searchInput').oninput = updateUI;
+
+        fetchPosts();
+    </script>
+</body>
+</html>

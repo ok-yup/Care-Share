@@ -1,0 +1,17 @@
+{
+  "name": "Care Share",
+  "short_name": "Care Share",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#fdfbf7",
+  "theme_color": "#4a6e53",
+  "description": "The Ripple of Wisdom - หนึ่งความรู้ส่งต่อ... ร้อยความดีงอกงาม",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
