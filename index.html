@@ -937,7 +937,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoXjA79QjZLTlZ0VJUFXa50dRtDW2JasV_Lvq5hmZrLDazoCsUL_IarJtP7GmtwOFi/exec";
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvTY31n5fhLql94Z5OoTcn67sUDO4n0f-Y1tHJljbj6zWIwyq87MpHxNNBsAtWz0M6/exec";
         const BANNED_KEYWORDS = [
             'ขอเงิน', 'โอนเงิน', 'บริจาค', 'รับบริจาค', 'ขอบริจาค', 'ทำบุญ', 'ร่วมบุญ', 'เลขบัญชี',
             'PromptPay', 'พร้อมเพย์', 'วอเลท', 'Wallet', 'ขอกู้', 'ขอยืม', 'ช่วยเหลือเงิน', 'เดือดร้อนเรื่องเงิน',
@@ -998,12 +998,10 @@
         }
         function openAction() {
             document.getElementById('modalOverlay').style.display = 'flex';
-            document.getElementById('aboutModal').style.display = 'none';
             document.getElementById('actionModal').style.display = 'block';
         }
         function closeModals() {
             document.getElementById('modalOverlay').style.display = 'none';
-            document.getElementById('aboutModal').style.display = 'none';
             document.getElementById('actionModal').style.display = 'none';
         }
 
@@ -1011,8 +1009,11 @@
             if (allPosts.length === 0) document.getElementById('postsContainer').innerHTML = Array(3).fill('<div class="skeleton"></div>').join('');
             if (SCRIPT_URL === "YOUR_APPS_SCRIPT_URL_HERE") { renderSeed(); return; }
             try {
+                console.log("Fetching posts from:", SCRIPT_URL);
                 const res = await fetch(SCRIPT_URL);
                 const json = await res.json();
+                console.log("Response received:", json);
+                
                 if (json.status === 'success') {
                     const newPosts = json.data;
                     if (isPolling && newPosts.length > 0 && newPosts[0].ID !== latestPostId) {
@@ -1023,8 +1024,13 @@
                     document.getElementById('energyMeter').innerText = `🌲 ${json.totalSparks || 0} Sparks`;
                     updateUI();
                     if (!isPolling) handleDeepLink();
+                } else {
+                    console.error("Backend returned error:", json.message);
                 }
-            } catch (e) { }
+            } catch (e) { 
+                console.error("Fetch failed:", e);
+                if (!isPolling) toast("ไม่สามารถโหลดข้อมูลได้ โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ตครับ 🌿");
+            }
         }
 
         setInterval(() => fetchPosts(true), 60000);
@@ -1137,6 +1143,7 @@
                         fetchPosts();
                         showView('feed');
                     } else {
+                        console.warn("Post rejected:", result.message);
                         // Show Dynamic AI message in a DEDICATED VIEW
                         document.getElementById('wisdomText').innerText = result.message || "เมล็ดพันธุ์นี้อาจยังไม่เหมาะกับสวนในตอนนี้ ลองแชร์เรื่องราวอื่นดูไหมครับ?";
                         showView('wisdom');
