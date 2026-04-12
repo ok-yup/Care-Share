@@ -1,4 +1,4 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3Vi_M1hohfa2C015ZcqKrsSzxbHDkvPIZtMyv2pVTmvu1Yn8j9a-550PMDTbXtpcY/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxc2cuZ0ehA8xl3c-BUJxk5GZz8Ae4GxR1rWpchpokjbZclhVhDLitj0eYh_SqJ_AXu/exec";
 const BANNED_KEYWORDS = [
     'ขอเงิน', 'โอนเงิน', 'บริจาค', 'รับบริจาค', 'ขอบริจาค', 'ทำบุญ', 'ร่วมบุญ', 'เลขบัญชี',
     'PromptPay', 'พร้อมเพย์', 'วอเลท', 'Wallet', 'ขอกู้', 'ขอยืม', 'ช่วยเหลือเงิน', 'เดือดร้อนเรื่องเงิน',
